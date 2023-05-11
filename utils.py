@@ -239,8 +239,8 @@ model2.load_state_dict(checkpoint2['state_dict'])
 
 
 
-def trans_img(input_image):
-    img = cv2.imread(PATH + '/'+input_image)
+def trans_img(content):
+    img = cv2.imdecode(np.frombuffer(content, np.uint8), -1)
     og = img
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
     img = resize(img, (512,512))
@@ -257,8 +257,8 @@ def trans_img(input_image):
 # y = (y/128).astype(np.float32)
 
 
-def colorize(imagename):
-    l, og = trans_img(input_image = imagename)
+def colorize(content):
+    l, og = trans_img(content)
     l = l.to(device = device)
     op = model1(l)
     op = op*128
@@ -291,9 +291,9 @@ def colorize(imagename):
 
     return result
 
-def trans_img2(input_image):
+def trans_img2(content):
     # img = cv2.imread(PATH + '/' + input_image)
-    img = Image.open(PATH + '/' + input_image)
+    img = Image.open(io.BytesIO(content))
     og = img
 
     img_ycbcr = img.convert('YCbCr')
@@ -301,8 +301,8 @@ def trans_img2(input_image):
 
     return augs_transforms(img_y).unsqueeze(0), img_cb, img_cr, og
 
-def superres(imagename):
-    img_y, img_cb, img_cr, og = trans_img2(imagename)
+def superres(content):
+    img_y, img_cb, img_cr, og = trans_img2(content)
     img_y = img_y.to(device = device)
     model2.eval()
     op = model2(img_y)
