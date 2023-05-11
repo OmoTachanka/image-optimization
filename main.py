@@ -35,8 +35,9 @@ async def predict(request: Request, file: UploadFile = File(...)):
     content = await file.read()
         # myfile.write(content)
         # myfile.close()
-
+    print(content)
     results = utils.superres(content)
+    print(results)
     return templates.TemplateResponse("superres.html", {"request": request, "results": results})
 
 @app.get("/colorizer.html")
