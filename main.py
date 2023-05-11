@@ -42,6 +42,7 @@ async def predict(request: Request, background_tasks: BackgroundTasks, file: Upl
         myfile.close()
     
     results = utils.superres(imagename = file.filename)
+    print(results)
     background_tasks.add_task(cleanup, PATH_FILES, file.filename)
     return templates.TemplateResponse("superres.html", {"request": request, "results": results})
 
