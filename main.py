@@ -38,11 +38,10 @@ async def predict(request: Request, background_tasks: BackgroundTasks, file: Upl
     #     shutil.copyfileobj(file.file, buffer)
     with open(PATH_FILES + file.filename, "wb") as myfile:
         content = await file.read()
-        myfile.write(content)
-        myfile.close()
-    
-    print(os.listdir(PATH_FILES))
-    results = utils.superres(imagename = file.filename)
+        # myfile.write(content)
+        # myfile.close()
+
+    results = utils.superres(content)
     background_tasks.add_task(cleanup, PATH_FILES, file.filename)
     return templates.TemplateResponse("superres.html", {"request": request, "results": results})
 
@@ -58,10 +57,10 @@ async def predict(request: Request, background_tasks: BackgroundTasks, file: Upl
     #     shutil.copyfileobj(file.file, buffer)
     with open(PATH_FILES + file.filename, "wb") as myfile:
         content = await file.read()
-        myfile.write(content)
-        myfile.close()
+        # myfile.write(content)
+        # myfile.close()
         
-    results = utils.colorize(imagename = file.filename)
+    results = utils.colorize(content)
     background_tasks.add_task(cleanup, PATH_FILES, file.filename)
     return templates.TemplateResponse("colorizer.html", {"request": request, "results": results})
 
