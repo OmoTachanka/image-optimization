@@ -15,11 +15,6 @@ templates = Jinja2Templates(directory = "templates")
 
 PATH_FILES = getcwd() + "/"
 
-def cleanup(temppath, f):
-    if True:
-        time.sleep(2)
-        os.remove(os.path.join(temppath, f))
-
 @app.get("/")
 # def read_root():
 #     return {"msg": "Hello World"}
@@ -33,16 +28,15 @@ def home(request: Request):
     return templates.TemplateResponse("superres.html", {"request": request})
 
 @app.post("/superres.html")
-async def predict(request: Request, background_tasks: BackgroundTasks, file: UploadFile = File(...)):
+async def predict(request: Request, file: UploadFile = File(...)):
     # with open(f'{PATH_FILES}{file.filename}', "wb") as buffer:
     #     shutil.copyfileobj(file.file, buffer)
-    with open(PATH_FILES + file.filename, "wb") as myfile:
-        content = await file.read()
+    # with open(PATH_FILES + file.filename, "wb") as myfile:
+    content = await file.read()
         # myfile.write(content)
         # myfile.close()
 
     results = utils.superres(content)
-    background_tasks.add_task(cleanup, PATH_FILES, file.filename)
     return templates.TemplateResponse("superres.html", {"request": request, "results": results})
 
 @app.get("/colorizer.html")
@@ -52,15 +46,14 @@ def home(request: Request):
     return templates.TemplateResponse("colorizer.html", {"request": request})
 
 @app.post("/colorizer.html")
-async def predict(request: Request, background_tasks: BackgroundTasks, file: UploadFile = File(...)):
+async def predict(request: Request, file: UploadFile = File(...)):
     # with open(f'{PATH_FILES}{file.filename}', "wb") as buffer:
     #     shutil.copyfileobj(file.file, buffer)
-    with open(PATH_FILES + file.filename, "wb") as myfile:
-        content = await file.read()
+    # with open(PATH_FILES + file.filename, "wb") as myfile:
+    content = await file.read()
         # myfile.write(content)
         # myfile.close()
         
     results = utils.colorize(content)
-    background_tasks.add_task(cleanup, PATH_FILES, file.filename)
     return templates.TemplateResponse("colorizer.html", {"request": request, "results": results})
 
