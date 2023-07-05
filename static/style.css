@@ -28,7 +28,7 @@ body::-webkit-scrollbar{
 
 header {
   position: fixed;
-  top: 48px;
+  top: 30px;
   left: 50%;
   transform: translate(-50%, 0);
   z-index: 1;
@@ -138,7 +138,7 @@ div.wiper h2{
 
 /* Colorizer Part */
 
-div.colorizer-div {
+.photos > div.colorizer-div {
   position: -webkit-sticky;
   position: sticky;
   display: grid;
@@ -169,6 +169,35 @@ div.colorizer-div {
   border-radius: 1rem;
   --position: 50%;
 }
+
+.sub-cont{
+  display: flex;
+}
+
+.download-box{
+  display: block;
+}
+
+a.download-btn-colorizer{
+  text-decoration: none;
+  color: #A9907E;
+  border-bottom: 0.1em solid #222222;
+}
+
+a.download-btn-colorizer:hover{
+  border-bottom-color: #A9907E;
+}
+
+a.download-btn-superres{
+  text-decoration: none;
+  color: #ABC4AA;
+  border-bottom: 0.1em solid #222222;
+}
+
+a.download-btn-superres:hover{
+  border-bottom-color: #ABC4AA;
+}
+
 
 .image-container {
   max-width: 500px;
