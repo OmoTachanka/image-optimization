@@ -12,7 +12,7 @@
   <body> 
 
     <main data-barba = "wrapper">
-      <article data-barba = "container" data-title="image colorization">
+      <article data-barba = "container" data-title="colorizer">
         <header>
           <img src="../static/logo_black.svg" alt="IO Logo">
           <h1>io</h1>
@@ -65,6 +65,9 @@
                       </svg>
                     </div>
                   </div>
+                </div>
+                <div class="download-box">
+                  <a class="download-btn-colorizer" download="colorizer.jpg" href='{{ results.output }}'>Download</a>
                 </div>
             {% endif %}
             </div>
